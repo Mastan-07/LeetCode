@@ -1,37 +1,20 @@
 class Solution {
-    public int[] findThePrefixCommonArray(int[] a, int[] b) 
-    {
-        List<Integer>l=new ArrayList<>();
-        int n=a.length;
-        int c=0;
-        int[] x=new int [n];
-        for(int i=0;i<n;i++)
-        {
-            if(l.contains(a[i]))
-            {
-                c++;
-            }
-            else
-            {
-                 l.add(a[i]);
+    public int[] findThePrefixCommonArray(int[] a, int[] b) {
+        int[] stat = new int[a.length + 1];
+        int[] c = new int[a.length];
 
+        int cur = 0;
+        for (int i = 0; i < a.length; i++) {
+            stat[a[i]]++;
+            if (stat[a[i]] == 2) {
+                cur++;
             }
-            
-            if(l.contains(b[i]))
-            {
-                c++;
+            stat[b[i]]++;
+            if (stat[b[i]] == 2) {
+                cur++;
             }
-            else
-            {
-                l.add(b[i]);
-
-            }
-        
-            x[i]=c;
-
+            c[i] = cur;
         }
-
-
-        return x;
+        return c;
     }
 }
