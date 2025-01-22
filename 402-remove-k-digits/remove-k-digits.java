@@ -1,34 +1,28 @@
 class Solution {
-    public String removeKdigits(String num, int k) {
-        Stack<Character> stack = new Stack<>();
-        
+    public String removeKdigits(String num, int k) 
+    {
+      if (k >= num.length()) {
+            return "0";
+        }
+
+        int position = -1;
+        int countDeletedCharacter = k;
+        char[] digits = new char[num.length()];
+
         for (char digit : num.toCharArray()) {
-            while (!stack.isEmpty() && k > 0 && stack.peek() > digit) {
-                stack.pop();
-                k--;
+            while (position >= 0 && countDeletedCharacter > 0 && digits[position] > digit) {
+                position--;
+                countDeletedCharacter--;
             }
-            stack.push(digit);
+            position++;
+            digits[position] = digit;
         }
-        
-        // Remove remaining k digits from the end of the stack
-        while (k > 0 && !stack.isEmpty()) {
-            stack.pop();
-            k--;
+
+        int start = 0;
+        int end = num.length() - k;
+        while (digits[start] == '0' && start < end - 1) {
+            start++;
         }
-        
-        // Construct the resulting string from the stack
-        StringBuilder sb = new StringBuilder();
-        while (!stack.isEmpty()) {
-            sb.append(stack.pop());
-        }
-        sb.reverse(); // Reverse to get the correct order
-        
-        // Remove leading zeros
-        while (sb.length() > 0 && sb.charAt(0) == '0') {
-            sb.deleteCharAt(0);
-        }
-        
-        // Handle edge case where result might be empty
-        return sb.length() > 0 ? sb.toString() : "0";
-    }
+        return String.valueOf(digits, start, end - start);
+}
 }
