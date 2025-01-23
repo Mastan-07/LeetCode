@@ -1,32 +1,22 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
-    public void helper(TreeNode root ,ArrayList<String> ar ,String s){
-        if(root ==null) return;
-        if(root.left==null && root.right==null){
-            s =s+root.val;
-            ar.add(s);
-            return;
-        }
-        helper(root.left,ar,s+root.val+"->");
-        helper(root.right,ar,s+root.val+"->");
+  public List<String> binaryTreePaths(TreeNode root) {
+    List<String> ans = new ArrayList<>();
+    dfs(root, new StringBuilder(), ans);
+    return ans;
+  }
+
+  private void dfs(TreeNode root, StringBuilder sb, List<String> ans) {
+    if (root == null)
+      return;
+    if (root.left == null && root.right == null) {
+      ans.add(sb.append(root.val).toString());
+      return;
     }
-    public List<String> binaryTreePaths(TreeNode root) {
-        ArrayList<String> ar = new ArrayList<>();
-        helper(root,ar,"");
-        return ar;
-    }
+
+    final int length = sb.length();
+    dfs(root.left, sb.append(root.val).append("->"), ans);
+    sb.setLength(length);
+    dfs(root.right, sb.append(root.val).append("->"), ans);
+    sb.setLength(length);
+  }
 }
