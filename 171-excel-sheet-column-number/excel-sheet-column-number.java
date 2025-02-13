@@ -1,9 +1,13 @@
 class Solution {
     public int titleToNumber(String columnTitle) {
-        int result = 0;
-        for (char c : columnTitle.toCharArray()) {
-            result = result * 26 + (c - 'A' + 1);
-        }
-        return result;
+        int colnum=0,i=0;
+        while(i!=columnTitle.length()){
+            colnum=colnum * 26+(columnTitle.charAt(i)-'A'+1);
+            i++;
+
+        }return colnum;
+
+
+        
     }
 }
